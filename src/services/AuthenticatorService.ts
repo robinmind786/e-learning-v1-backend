@@ -62,7 +62,7 @@ class Authenticator extends Utils {
       res.redirect(redirectURL);
     } else {
       res.status(statusCode).json({
-        success: true,
+        status: true,
         message: `Welcome back ${user.fname}.`,
         user,
         accessToken,
@@ -206,7 +206,7 @@ class Authenticator extends Utils {
         .verifyAccount()
         .then(() => {
           res.status(200).json({
-            success: true,
+            status: true,
             message: "Verification code sent successfully to your email.",
             token,
           });
@@ -298,7 +298,7 @@ class Authenticator extends Utils {
       }
 
       // Create a new user with verified status
-      const newUser = await this.Model.create({
+      await this.Model.create({
         fname: this.capitalize(fname),
         lname: this.capitalize(lname),
         email,
@@ -311,8 +311,7 @@ class Authenticator extends Utils {
 
       // Send success response
       res.status(201).json({
-        success: true,
-        newUser,
+        status: true,
         message: `Congratulations, ${this.capitalize(
           fname
         )}! Your account has been successfully activated.`,
@@ -571,7 +570,7 @@ class Authenticator extends Utils {
       const accessToken = this.jwtCreator(
         { id: user._id },
         accessTokenSecret ?? "",
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRE ?? "5m" }
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRE ?? "3d" }
       );
 
       const refreshToken = this.jwtCreator(

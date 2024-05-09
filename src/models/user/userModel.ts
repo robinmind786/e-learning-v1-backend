@@ -10,11 +10,45 @@ const eductionSchema = new Schema<IUserEducation>({
 });
 
 const socialProfileSchema = new Schema<IUserSocialProfile>({
-  name: {
-    type: String,
+  facebook: {
+    url: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
   },
-  url: {
-    type: String,
+  x: {
+    url: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+  },
+  github: {
+    url: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+  },
+  youtube: {
+    url: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+  },
+  instagram: {
+    url: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
   },
 });
 
@@ -72,7 +106,7 @@ const userSchema = new Schema<IUser>(
       select: false,
     },
     education: [eductionSchema],
-    socialProfile: [socialProfileSchema],
+    socialProfile: socialProfileSchema,
     courses: [
       {
         type: Schema.Types.ObjectId,
@@ -119,7 +153,7 @@ userSchema.methods.signAccessToken = function (this: IUser) {
   return jwtCreator(
     { id: this._id },
     process.env.ACCESS_TOKEN ?? "",
-    process.env.ACCESS_TOKEN_EXPIRE ?? "5m"
+    process.env.ACCESS_TOKEN_EXPIRE ?? "3d"
   );
 };
 
