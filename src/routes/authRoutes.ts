@@ -41,7 +41,12 @@ router.get(
   authController.updateAccessToken
 );
 
-router.get("/me", authController.isAuthenticated, authController.getUserInfo);
+router.get(
+  "/me",
+  authController.updateAccessToken,
+  authController.isAuthenticated,
+  authController.getUserInfo
+);
 
 router.patch(
   "/update-user-info",
